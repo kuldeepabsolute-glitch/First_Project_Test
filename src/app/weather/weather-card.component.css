@@ -1,0 +1,11 @@
+.weather-card { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: 12px; background: var(--card-grad-start); margin: 0.6rem 0; box-shadow: 0 6px 20px rgba(20,30,60,0.06); transition: transform 220ms ease; }
+.weather-card:hover { transform: translateY(-6px); }
+.wc-left { display: flex; flex-direction: column; }
+.city { font-weight: 800; font-size: 1rem; color: var(--card-text); }
+.desc { color: var(--muted-text); margin-top: 4px; }
+.meta { margin-top: 8px; display: flex; gap: 0.6rem; color: var(--muted-text); font-size: 0.85rem; }
+.wc-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.temp { font-size: 1.6rem; font-weight: 800; color: var(--btn-text); }
+.wind, .icon { color: var(--muted-text); }
+.fav-btn { background: var(--btn-bg); border: none; padding: 0.35rem 0.5rem; border-radius: 8px; cursor: pointer; }
+.fav-btn[aria-pressed="true"] { background: rgba(255,179,0,1); color: #111; }

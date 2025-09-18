@@ -1,0 +1,79 @@
+<div class="todo-page">
+  <header class="todo-hero">
+    <h1>To DO List</h1>
+    <p class="lead">Your tasks, prioritized and ready.</p>
+  </header>
+
+  <section class="todo-controls">
+    <div class="new-row">
+      <input #newTodo class="todo-input" placeholder="Add a new task" (keyup.enter)="addWithDate(newTodo.value, newDue.value); newTodo.value='';" />
+  <input #newDue type="date" class="todo-date" [value]="today" [min]="today" aria-label="Due date" title="Due date" />
+      <button class="btn primary" (click)="addWithDate(newTodo.value, newDue.value); newTodo.value='';">Save</button>
+    </div>
+  </section>
+  <section class="todo-list">
+    <ng-container *ngFor="let group of groupedTodos()">
+      <div class="day-group">
+        <h3 class="day-heading">{{ group.date | date:'fullDate' }}</h3>
+        <ul>
+          <li *ngFor="let t of group.items" [class.done]="t.done">
+            <div class="todo-row">
+              <label>
+                <input type="checkbox" [checked]="t.done" (change)="toggle(t)" [disabled]="t.done" />
+              </label>
+
+              <div class="todo-main">
+                <span *ngIf="t.done" class="completed-icon" aria-hidden="true">✔️</span>
+                <ng-container *ngIf="!t.editing; else editTpl">
+                  <div class="todo-title-row">
+                    <span class="todo-title">{{ t.title }}</span>
+                    <small *ngIf="t.completedAt" class="completed-time">Completed: {{ t.completedAt | date:'short' }}</small>
+                  </div>
+                </ng-container>
+                <ng-template #editTpl>
+                  <input class="todo-edit-input" [(ngModel)]="t.title" (keyup.enter)="saveEdit(t)" />
+                </ng-template>
+              </div>
+
+              <div class="todo-actions">
+                <ng-container *ngIf="!t.done">
+                  <button class="btn" (click)="t.editing ? saveEdit(t) : startEdit(t)">{{ t.editing ? 'Save' : 'Edit' }}</button>
+                  <button class="btn danger" (click)="confirmDelete(t)">Delete</button>
+                  <button class="btn" *ngIf="t.editing" (click)="cancelEdit(t)">Cancel</button>
+                </ng-container>
+                <ng-container *ngIf="t.done">
+                  <span class="muted">Completed</span>
+                </ng-container>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+  </section>
+
+  <section class="todo-archived" *ngIf="archived?.length">
+    <h3>Archived</h3>
+    <div class="archived-controls">
+      <button class="btn" (click)="restoreAll()">Restore All</button>
+    </div>
+    <ul>
+      <li *ngFor="let a of archived" class="archived-row">
+        <div class="archived-left">
+          <span class="completed-icon">✔️</span>
+          <div>
+            <div class="todo-title">{{ a.title }}</div>
+            <small *ngIf="a.completedAt" class="completed-time">Completed: {{ a.completedAt | date:'short' }}</small>
+            <small *ngIf="a.archivedAt" class="completed-time">Archived: {{ a.archivedAt | date:'short' }}</small>
+          </div>
+        </div>
+        <div class="archived-actions">
+          <button class="btn" (click)="restore(a)">Restore</button>
+          <button class="btn danger" (click)="permanentDelete(a)" title="Permanently delete">Delete</button>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <confirm-modal *ngIf="confirmTarget()" [message]="'Delete task: ' + confirmTarget().title + '? This will archive the task.'" [title]="'Confirm delete'" (confirmed)="onConfirmResult($event)"></confirm-modal>
+</div>

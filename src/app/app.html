@@ -1,0 +1,58 @@
+<div class="app-shell" [attr.data-theme]="theme">
+	<div class="top-spinner" *ngIf="loading()" aria-hidden="true">
+		<div class="spinner"></div>
+	</div>
+
+	<header class="global-nav" *ngIf="isLoggedIn">
+		<div class="nav-left">
+			<div class="brand">{{ title() }}</div>
+		</div>
+		<div class="nav-center">
+			<nav>
+				<a routerLink="/" class="nav-link">Home</a>
+				<a routerLink="/todo" class="nav-link">To Do</a>
+				<a routerLink="/users" class="nav-link">Users</a>
+				<a routerLink="/weather" class="nav-link">Weather</a>
+				<a routerLink="/news" class="nav-link">News</a>
+			</nav>
+		</div>
+		<div class="nav-right">
+			<div class="logout-timer" *ngIf="timeRemaining > 0">
+				<span class="timer-icon">⏱</span>
+				<span class="timer-text">{{ formatTime(timeRemaining) }}</span>
+			</div>
+					<div class="theme-picker" role="group" aria-label="Theme picker">
+						<button class="theme-btn" aria-haspopup="menu" aria-expanded="false" (click)="pickerOpen = !pickerOpen">
+							<span class="theme-icon" aria-hidden="true">🌗</span>
+							<span class="theme-label">{{ themeMode === 'system' ? 'System' : (themeMode === 'dark' ? 'Dark' : 'Light') }}</span>
+							<span class="chev">▾</span>
+						</button>
+						<div class="theme-menu" *ngIf="pickerOpen" role="menu">
+							<button class="theme-item" role="menuitem" (click)="setThemeMode('light'); pickerOpen=false">Light</button>
+							<button class="theme-item" role="menuitem" (click)="setThemeMode('dark'); pickerOpen=false">Dark</button>
+							<button class="theme-item" role="menuitem" (click)="setThemeMode('system'); pickerOpen=false">System</button>
+						</div>
+					</div>
+
+			<div class="profile dropdown" tabindex="0">
+				<div class="avatar" [style.backgroundImage]="profile.avatarUrl ? 'url('+profile.avatarUrl+')' : ''" aria-hidden="true">{{ !profile.avatarUrl ? profile.name.charAt(0) : '' }}</div>
+				<div class="profile-name">{{ profile.name }}</div>
+				<div class="dropdown-menu" role="menu">
+					<button class="dropdown-item" role="menuitem">Settings</button>
+					<button class="dropdown-item" role="menuitem" (click)="signOut()">Sign out</button>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<main class="app-main">
+		<router-outlet></router-outlet>
+	</main>
+
+	<div class="toast" *ngIf="toast.get()">
+		<div class="toast-inner">
+			<span class="toast-message">{{ toast.get()?.message }}</span>
+			<button class="btn" (click)="runToastAction()">{{ toast.get()?.actionLabel || 'Undo' }}</button>
+		</div>
+	</div>
+</div>

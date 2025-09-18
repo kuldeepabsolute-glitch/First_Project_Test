@@ -1,0 +1,12 @@
+<div class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-desc">
+  <div class="modal" #modalRoot>
+    <header class="modal-header">
+      <h3 id="confirm-title">{{ title }}</h3>
+    </header>
+    <div class="modal-body" id="confirm-desc">{{ message }}</div>
+    <footer class="modal-footer">
+      <button class="btn" (click)="cancel()">Cancel</button>
+      <button #okBtn class="btn primary" (click)="ok()">OK</button>
+    </footer>
+  </div>
+</div>
