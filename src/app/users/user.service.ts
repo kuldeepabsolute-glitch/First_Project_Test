@@ -9,6 +9,23 @@ export class UserService {
 
   constructor() {
     this.load();
+    this.createDefaultAdmin();
+  }
+
+  private createDefaultAdmin() {
+    const adminExists = this.users.find(u => u.email === 'admin@admin.com');
+    if (!adminExists) {
+      const adminUser: User = {
+        id: 'admin-001',
+        name: 'Admin',
+        email: 'admin@admin.com',
+        mobile: '9999999999',
+        password: '123',
+        avatarUrl: ''
+      };
+      this.users.push(adminUser);
+      this.save();
+    }
   }
 
   private save() {
