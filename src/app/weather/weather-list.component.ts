@@ -23,7 +23,7 @@ import { WeatherCardComponent } from './weather-card.component';
       </ng-template>
     </div>
   `,
-  styles: [`.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem } .card-wrap { cursor:grab } .card-wrap.dragging { opacity:0.5; transform:scale(0.98) }`]
+  styles: [`.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem } .card-wrap { cursor:grab } .card-wrap.dragging { opacity:0.5; transform:scale(0.98) } @media (max-width: 768px) { .grid { grid-template-columns:1fr; gap:1rem } } @media (max-width: 1024px) and (min-width: 769px) { .grid { grid-template-columns:repeat(2,1fr) } }`]
 })
 export class WeatherListComponent {
   @Input() cities: any[] | null = null;

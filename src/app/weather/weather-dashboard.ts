@@ -56,6 +56,21 @@ import { StorageService } from './storage.service';
     .cur-left .desc { color: var(--muted-text); margin-top:4px }
     .cur-right .temp { font-size:1.5rem; font-weight:800; color: rgb(var(--accent)) }
     .cur-right .wind { color: var(--muted-text); font-size:0.85rem }
+    
+    @media (max-width: 768px) {
+      .weather-page { padding: 0.5rem; }
+      .cur-card { flex-direction: column; align-items: stretch; text-align: center; gap: 0.75rem; }
+      .cur-right { align-items: center; }
+      h2 { font-size: 1.5rem; text-align: center; }
+      h3 { font-size: 1.2rem; }
+    }
+    
+    @media (max-width: 480px) {
+      .weather-page { padding: 0.25rem; }
+      .cur-card { padding: 0.75rem; }
+      .cur-right .temp { font-size: 1.3rem; }
+      h2 { font-size: 1.3rem; }
+    }
     `
   ]
 })

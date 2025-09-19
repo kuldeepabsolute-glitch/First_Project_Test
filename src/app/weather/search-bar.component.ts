@@ -22,12 +22,23 @@ import { CommonModule } from '@angular/common';
   styles: [`
     .search-bar { display:flex; gap:0.5rem; align-items:flex-start }
     .input-wrap { position:relative; flex:1 }
-    input { width:100%; padding:0.6rem 0.75rem; border-radius:8px; border:1px solid var(--muted, #ddd); }
+    input { width:100%; padding:0.6rem 0.75rem; border-radius:8px; border:1px solid var(--muted, #ddd); box-sizing:border-box; }
     .search-btn { background:linear-gradient(180deg,#4b9 0,#2a7 100%); color:#022; border:none; padding:0.5rem 0.9rem; border-radius:8px; display:flex; gap:0.5rem; align-items:center; cursor:pointer }
     .search-btn:active { transform:translateY(1px) }
     .suggestions { position:absolute; left:0; right:0; top:calc(100% + 6px); background:#fff; border:1px solid #ddd; border-radius:6px; max-height:180px; overflow:auto; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:0.25rem 0; z-index:40 }
     .suggestions li { list-style:none; padding:0.5rem 0.75rem; cursor:pointer }
     .suggestions li:hover, .suggestions li:focus { background:var(--muted-bg,#f3f3f3); outline:none }
+    
+    @media (max-width: 768px) {
+      .search-bar { flex-direction:column; gap:0.75rem; }
+      .search-btn { width:100%; justify-content:center; padding:0.75rem; }
+      .search-text { display:block; }
+    }
+    
+    @media (max-width: 480px) {
+      input { padding:0.75rem; font-size:16px; }
+      .search-btn { padding:0.875rem; }
+    }
   `]
 })
 export class SearchBarComponent {
