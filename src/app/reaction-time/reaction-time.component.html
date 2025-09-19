@@ -1,0 +1,135 @@
+<div class="reaction-time-container">
+  <header class="game-header">
+    <h1>Reaction Time Test</h1>
+    <p class="subtitle">Test how fast your reflexes are!</p>
+  </header>
+
+  <main class="game-main">
+    <!-- Main Test Area -->
+    <div 
+      class="test-area"
+      [class]="getStateClass()"
+      (click)="onTestClick()"
+      [attr.aria-label]="getInstructionText()"
+      role="button"
+      tabindex="0"
+    >
+      <div class="test-content">
+        <!-- Idle State -->
+        <div *ngIf="gameState === 'idle'" class="state-content">
+          <div class="icon">🎯</div>
+          <h2>Ready to Test?</h2>
+          <p class="instruction">{{ getInstructionText() }}</p>
+          <div class="help-text">
+            <p>• Click "Start" to begin</p>
+            <p>• Wait for the green signal</p>
+            <p>• Click as fast as you can!</p>
+          </div>
+        </div>
+
+        <!-- Waiting State -->
+        <div *ngIf="gameState === 'waiting'" class="state-content">
+          <div class="icon">⏳</div>
+          <h2>Get Ready...</h2>
+          <p class="instruction">{{ getInstructionText() }}</p>
+          <div class="waiting-animation">
+            <div class="pulse"></div>
+          </div>
+        </div>
+
+        <!-- Ready State -->
+        <div *ngIf="gameState === 'ready'" class="state-content">
+          <div class="icon">🟢</div>
+          <h2 class="ready-text">GO!</h2>
+          <p class="instruction">{{ getInstructionText() }}</p>
+        </div>
+
+        <!-- Result State -->
+        <div *ngIf="gameState === 'result'" class="state-content">
+          <div class="icon">⚡</div>
+          <h2>Result</h2>
+          <div class="result-display">
+            <div class="reaction-time">{{ currentReactionTime }}ms</div>
+            <div class="rating">{{ getReactionRating(currentReactionTime) }}</div>
+          </div>
+          <button class="btn btn-primary" (click)="resetTest()">
+            Try Again
+          </button>
+        </div>
+
+        <!-- Too Soon State -->
+        <div *ngIf="gameState === 'tooSoon'" class="state-content">
+          <div class="icon">❌</div>
+          <h2>Too Soon!</h2>
+          <p class="instruction">{{ getInstructionText() }}</p>
+          <button class="btn btn-secondary" (click)="resetTest()">
+            Try Again
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics Sidebar -->
+    <aside class="stats-sidebar">
+      <div class="stats-card">
+        <h3>Statistics</h3>
+        
+        <div class="stat-item" *ngIf="averageReactionTime > 0">
+          <span class="stat-label">Average Time:</span>
+          <span class="stat-value">{{ averageReactionTime }}ms</span>
+        </div>
+        
+        <div class="stat-item" *ngIf="reactionTimes.length > 0">
+          <span class="stat-label">Best Time:</span>
+          <span class="stat-value">{{ getBestTime() }}ms</span>
+        </div>
+        
+        <div class="stat-item">
+          <span class="stat-label">Attempts:</span>
+          <span class="stat-value">{{ reactionTimes.length }}</span>
+        </div>
+      </div>
+
+      <div class="history-card" *ngIf="reactionTimes.length > 0">
+        <h3>Recent Results</h3>
+        <div class="history-list">
+          <div 
+            *ngFor="let time of reactionTimes; let i = index" 
+            class="history-item"
+            [class.latest]="i === 0"
+          >
+            <span class="attempt-number">#{{ reactionTimes.length - i }}</span>
+            <span class="attempt-time">{{ time }}ms</span>
+            <span class="attempt-rating">{{ getReactionRating(time) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>Reaction Time Guide</h3>
+        <div class="rating-guide">
+          <div class="rating-item excellent">
+            <span class="rating-range">&lt; 200ms</span>
+            <span class="rating-label">Excellent</span>
+          </div>
+          <div class="rating-item good">
+            <span class="rating-range">200-250ms</span>
+            <span class="rating-label">Good</span>
+          </div>
+          <div class="rating-item average">
+            <span class="rating-range">250-300ms</span>
+            <span class="rating-label">Average</span>
+          </div>
+          <div class="rating-item below">
+            <span class="rating-range">300-400ms</span>
+            <span class="rating-label">Below Average</span>
+          </div>
+          <div class="rating-item slow">
+            <span class="rating-range">&gt; 400ms</span>
+            <span class="rating-label">Slow</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+</div>

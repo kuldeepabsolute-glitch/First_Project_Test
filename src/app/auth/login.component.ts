@@ -52,7 +52,7 @@ export class LoginComponent {
     this.error = '';
     
     if (this.auth.login(this.email, this.password)) {
-      this.router.navigate(['/']);
+      this.router.navigateByUrl('/');
     } else {
       this.error = 'Invalid email or password';
     }

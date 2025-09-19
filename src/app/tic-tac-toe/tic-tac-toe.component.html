@@ -1,0 +1,94 @@
+<div class="tic-tac-toe-container">
+  <header class="game-header">
+    <h1>Tic-Tac-Toe</h1>
+    <div class="game-status">{{ getGameStatusMessage() }}</div>
+  </header>
+
+  <main class="game-main">
+    <section class="game-board-section">
+      <div class="players-info">
+        <div class="player-info">
+          <span class="player-name">{{ playerXName }} (X)</span>
+          <span class="player-score">{{ score.X }}</span>
+        </div>
+        <div class="player-info">
+          <span class="player-name">{{ playerOName }} (O)</span>
+          <span class="player-score">{{ score.O }}</span>
+        </div>
+      </div>
+
+      <div class="game-board" tabindex="0">
+        <button
+          *ngFor="let cell of board; let i = index"
+          [class]="getCellClass(i)"
+          [disabled]="board[i] !== null || gameState !== 'playing' || aiThinking"
+          (click)="makeMove(i)"
+        >
+          <span class="cell-content">{{ board[i] }}</span>
+        </button>
+      </div>
+    </section>
+
+    <aside class="game-sidebar">
+      <div class="setup-card">
+        <h2>Settings</h2>
+        <div class="mode-selection">
+          <h3>Mode</h3>
+          <div class="mode-buttons">
+            <button 
+              [class]="'mode-btn ' + (gameMode === 'friend' ? 'active' : '')"
+              (click)="gameMode = 'friend'; playerOName = friendName"
+            >
+              Friend
+            </button>
+            <button 
+              [class]="'mode-btn ' + (gameMode === 'computer' ? 'active' : '')"
+              (click)="gameMode = 'computer'; playerOName = 'Computer'"
+            >
+              Computer
+            </button>
+          </div>
+        </div>
+        <div class="player-setup">
+          <div class="player-input">
+            <label>Player X:</label>
+            <input type="text" [(ngModel)]="playerXName" maxlength="15">
+          </div>
+          <div class="player-input" *ngIf="gameMode === 'friend'">
+            <label>Player O:</label>
+            <input 
+              type="text" 
+              [(ngModel)]="friendName" 
+              (ngModelChange)="playerOName = friendName"
+              placeholder="Friend's name"
+              maxlength="15"
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="game-controls">
+        <button class="btn btn-primary" (click)="resetGame()">New Game</button>
+        <button class="btn btn-secondary" (click)="resetScore()">Reset Score</button>
+      </div>
+
+      <div class="score-board">
+        <h2>Score</h2>
+        <div class="score-grid">
+          <div class="score-item">
+            <span class="score-label">{{ playerXName }}</span>
+            <span class="score-value">{{ score.X }}</span>
+          </div>
+          <div class="score-item">
+            <span class="score-label">{{ playerOName }}</span>
+            <span class="score-value">{{ score.O }}</span>
+          </div>
+          <div class="score-item">
+            <span class="score-label">Draws</span>
+            <span class="score-value">{{ score.draws }}</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+</div>

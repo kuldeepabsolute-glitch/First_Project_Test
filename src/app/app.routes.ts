@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
 import { Home } from './home/home';
 import { AuthGuard } from './auth/auth.guard';
+import { LoginGuard } from './auth/login.guard';
 
 export const routes: Routes = [
-	{ path: 'login', loadComponent: () => import('./auth/login.component').then(m => m.LoginComponent) },
+	{ path: 'login', loadComponent: () => import('./auth/login.component').then(m => m.LoginComponent), canActivate: [LoginGuard] },
 	{ path: '', component: Home, canActivate: [AuthGuard] },
 	{
 		path: 'todo',
@@ -28,6 +29,26 @@ export const routes: Routes = [
 	{
 		path: 'news/article',
 		loadComponent: () => import('./news/news-detail.component').then(m => m.NewsDetailComponent),
+		canActivate: [AuthGuard]
+	},
+	{
+		path: 'tic-tac-toe',
+		loadChildren: () => import('./tic-tac-toe/tic-tac-toe.module').then(m => m.TicTacToeModule),
+		canActivate: [AuthGuard]
+	},
+	{
+		path: 'snake-game',
+		loadChildren: () => import('./snake-game/snake-game.module').then(m => m.SnakeGameModule),
+		canActivate: [AuthGuard]
+	},
+	{
+		path: 'flappy-bird',
+		loadChildren: () => import('./flappy-bird/flappy-bird.module').then(m => m.FlappyBirdModule),
+		canActivate: [AuthGuard]
+	},
+	{
+		path: 'reaction-time',
+		loadChildren: () => import('./reaction-time/reaction-time.module').then(m => m.ReactionTimeModule),
 		canActivate: [AuthGuard]
 	},
 	{ path: '**', redirectTo: '/login' }

@@ -1,0 +1,140 @@
+<div class="snake-game-container">
+  <header class="game-header">
+    <h1>Snake Game</h1>
+    <div class="game-info">
+      <div class="score-display">
+        <span class="score-label">Score:</span>
+        <span class="score-value">{{ score }}</span>
+      </div>
+      <div class="high-score-display">
+        <span class="score-label">High Score:</span>
+        <span class="score-value">{{ highScore }}</span>
+      </div>
+      <div class="game-status" *ngIf="gameOver">
+        Game Over!
+      </div>
+    </div>
+  </header>
+
+  <main class="game-main">
+    <div class="canvas-container">
+      <canvas 
+        #gameCanvas 
+        class="game-canvas"
+        [attr.aria-label]="'Snake game canvas. Current score: ' + score"
+      ></canvas>
+      
+      <div class="game-overlay" *ngIf="gameOver">
+        <div class="overlay-content">
+          <h2>Game Over!</h2>
+          <p>Final Score: {{ score }}</p>
+          <button 
+            class="btn btn-primary restart-btn" 
+            (click)="restartGame()"
+            [attr.aria-label]="'Restart snake game'"
+          >
+            Play Again
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="game-sidebar">
+      <div class="difficulty-selector">
+        <h3>Difficulty Level</h3>
+        <div class="difficulty-buttons">
+          <button 
+            [class]="'difficulty-btn ' + (difficulty === 'slow' ? 'active' : '')"
+            (click)="setDifficulty('slow')"
+          >
+            🐌 Slow
+          </button>
+          <button 
+            [class]="'difficulty-btn ' + (difficulty === 'medium' ? 'active' : '')"
+            (click)="setDifficulty('medium')"
+          >
+            🚶 Medium
+          </button>
+          <button 
+            [class]="'difficulty-btn ' + (difficulty === 'fast' ? 'active' : '')"
+            (click)="setDifficulty('fast')"
+          >
+            🏃 Fast
+          </button>
+        </div>
+      </div>
+
+      <div class="controls-info">
+        <h3>Controls</h3>
+        <div class="control-item">
+          <span class="key">↑</span>
+          <span class="action">Move Up</span>
+        </div>
+        <div class="control-item">
+          <span class="key">↓</span>
+          <span class="action">Move Down</span>
+        </div>
+        <div class="control-item">
+          <span class="key">←</span>
+          <span class="action">Move Left</span>
+        </div>
+        <div class="control-item">
+          <span class="key">→</span>
+          <span class="action">Move Right</span>
+        </div>
+      </div>
+
+      <div class="game-actions">
+        <button 
+          class="btn btn-secondary" 
+          (click)="restartGame()"
+          [disabled]="!gameRunning && !gameOver"
+        >
+          Restart Game
+        </button>
+      </div>
+
+      <div class="game-stats">
+        <h3>Stats</h3>
+        <div class="stat-item">
+          <span class="stat-label">Length:</span>
+          <span class="stat-value">{{ snake.length }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Score:</span>
+          <span class="stat-value">{{ score }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">High Score:</span>
+          <span class="stat-value">{{ highScore }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Next Food:</span>
+          <span class="stat-value">{{ food.emoji }} (+{{ food.points }})</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Difficulty:</span>
+          <span class="stat-value">{{ getDifficultyEmoji() }} {{ getDifficultyName() }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Status:</span>
+          <span class="stat-value">{{ gameRunning ? 'Playing' : (gameOver ? 'Game Over' : 'Ready') }}</span>
+        </div>
+      </div>
+
+
+    </aside>
+  </main>
+
+  <!-- Mobile Controls -->
+  <div class="mobile-controls">
+    <div class="control-pad">
+      <button class="control-btn up" (click)="moveUp()">↑</button>
+      <div class="control-row">
+        <button class="control-btn left" (click)="moveLeft()">←</button>
+        <button class="control-btn right" (click)="moveRight()">→</button>
+      </div>
+      <button class="control-btn down" (click)="moveDown()">↓</button>
+    </div>
+  </div>
+</div>

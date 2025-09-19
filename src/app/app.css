@@ -131,13 +131,13 @@
 .home-container {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 2.5rem 1rem 4rem;
+  padding: 0.5rem 1rem 4rem;
 }
 
 .hero {
   background: linear-gradient(90deg, #4b6cb7, #182848);
   color: white;
-  padding: 2.25rem 1rem;
+  padding: 1.5rem 1rem 2.25rem;
   border-radius: 14px;
   box-shadow: 0 12px 30px rgba(16, 24, 40, 0.12);
 }
@@ -239,6 +239,34 @@
 .users { background: linear-gradient(135deg,#a8edea,#fed6e3); }
 .weather { background: linear-gradient(135deg,#667eea,#764ba2); }
 .news { background: linear-gradient(135deg,#ff6b6b,#ffa726); }
+.tile.game { 
+  background: linear-gradient(135deg,#667eea,#764ba2) !important;
+  color: white !important;
+}
+.tile.game .tile-desc {
+  color: rgba(255,255,255,0.9) !important;
+}
+.tile.snake { 
+  background: linear-gradient(135deg,#4CAF50,#45a049) !important;
+  color: white !important;
+}
+.tile.snake .tile-desc {
+  color: rgba(255,255,255,0.9) !important;
+}
+.tile.flappy { 
+  background: linear-gradient(135deg,#87CEEB,#4682B4) !important;
+  color: white !important;
+}
+.tile.flappy .tile-desc {
+  color: rgba(255,255,255,0.9) !important;
+}
+.tile.reaction { 
+  background: linear-gradient(135deg,#667eea,#764ba2) !important;
+  color: white !important;
+}
+.tile.reaction .tile-desc {
+  color: rgba(255,255,255,0.9) !important;
+}
 .settings { background: linear-gradient(135deg,#fbc2eb,#a6c1ee); }
 
 @media (max-width: 700px) {

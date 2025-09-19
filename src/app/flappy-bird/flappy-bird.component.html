@@ -1,0 +1,85 @@
+<div class="flappy-bird-container">
+  <header class="game-header">
+    <h1>Flappy Bird</h1>
+    <div class="game-info">
+      <div class="score-display">
+        <span class="score-label">Score:</span>
+        <span class="score-value">{{ score }}</span>
+      </div>
+      <div class="game-status" *ngIf="gameOver">
+        Game Over!
+      </div>
+    </div>
+  </header>
+
+  <main class="game-main">
+    <div class="canvas-container">
+      <canvas 
+        #gameCanvas 
+        class="game-canvas"
+        [attr.aria-label]="'Flappy Bird game canvas. Current score: ' + score"
+      ></canvas>
+    </div>
+
+    <aside class="game-sidebar">
+      <div class="game-controls">
+        <button 
+          class="btn btn-primary" 
+          (click)="jump()"
+          *ngIf="!gameStarted"
+        >
+          Start Game
+        </button>
+        <button 
+          class="btn btn-primary" 
+          (click)="restartGame()"
+          *ngIf="gameOver"
+        >
+          Restart Game
+        </button>
+      </div>
+
+      <div class="game-stats">
+        <h3>Stats</h3>
+        <div class="stat-item">
+          <span class="stat-label">Score:</span>
+          <span class="stat-value">{{ score }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Status:</span>
+          <span class="stat-value">
+            {{ !gameStarted ? 'Ready' : (gameRunning ? 'Flying' : 'Game Over') }}
+          </span>
+        </div>
+      </div>
+
+      <div class="instructions">
+        <h3>Controls</h3>
+        <div class="control-item">
+          <span class="key">SPACE</span>
+          <span class="action">Fly Up</span>
+        </div>
+        <div class="control-item">
+          <span class="key">CLICK</span>
+          <span class="action">Fly Up</span>
+        </div>
+        <div class="control-item">
+          <span class="key">TOUCH</span>
+          <span class="action">Fly Up</span>
+        </div>
+      </div>
+
+      <div class="tips">
+        <h3>Tips</h3>
+        <ul>
+          <li>Time your clicks/taps carefully</li>
+          <li>Don't fly too high or too low</li>
+          <li>Watch out for the pipes!</li>
+          <li>Try to get through the gaps</li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+
+</div>
